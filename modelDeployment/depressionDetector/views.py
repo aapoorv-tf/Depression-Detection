@@ -292,11 +292,4 @@ class tf_processing(APIView):
 
 
 
-        # consumer_key = 'wpXUnvBWpL8fF1oDLCkQN40Jv'
-        # consumer_secret = 'P4ujBI6xkqPr3XlTzoJwqZeaurzH9qZzQcBJJ3eGFQbGzj0RpS'
-        # access_key = '1354405337252716547-1Ml5HkCqZTwErp10WxlMPSzRJjRNAl'
-        # access_secret = 'qgweyy6UfP7wzHqafGbTdtKhN2kfK5gcENn9bjR1avFPH'
-
-        # auth = tw.OAuthHandler(consumer_key, consumer_secret)
-        # auth.set_access_token(access_key, access_secret)
-        # api = tw.API(auth, wait_on_rate_limit=True)
+       

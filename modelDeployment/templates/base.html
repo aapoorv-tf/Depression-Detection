@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Twitter</title>
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper container">
+        <a href="/" class="brand-logo"><i class="fab fa-twitter-square"></i>   Depression Detection on Twitter</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a class="waves-effect waves-light btn">About Us</a></li>
+          <li><a class="waves-effect waves-light btn">How to use</a></li>
+      </ul>
+    </div>
+  </nav>
+<div class="row container">
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-content white-text">
+          <span class="card-title"><i class="fas fa-frown"></i>    Causes</span>
+          <p>Depression is a mood disorder that causes a persistent feeling of sadness and loss of interest.</p>
+        </div>
+        <div class="card-action">
+          <a href="https://www.healthline.com/health/depression" style="color:#00adb5;">Everything to know</a>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-content white-text">
+          <span class="card-title"><i class="fas fa-prescription-bottle-alt"></i>   Medication</span>
+          <p>Along with therapy and sometimes medication, there's a lot you can do on your own to fight back.</p>
+        </div>
+        <div class="card-action">
+          <a href="https://www.webmd.com/depression/features/natural-treatments#1"  style="color:#00adb5;">Treatment</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="row container tweetinput">
+    <form class="col s12" action="{% url 'search' %}" method="post">
+        {% csrf_token %}
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="tweet id" type="text" class="validate" name="tweet_id">
+          <label for="tweet id">Tweet ID</label>
+        </div>
+        <div class="range-field col s6" id="slide">
+            <label for="tweet_no">Number of tweets</label>
+          <input type="range" id="tweet_no" min="0" max="100" name="tweet_no">
+        </div>
+      </div>
+        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+    <i class="material-icons right">send</i>
+  </button>
+    </form>
+</div>
+{% block content %}
+
+{% endblock content %}
+</body>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</html>

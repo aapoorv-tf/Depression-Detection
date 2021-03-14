@@ -43,7 +43,7 @@ simple RNN model, second one is LSTM, and the last one is CNN-LSTM (composed of
 a 1D convolutional layer, max pooling layer and LSTM).
 
 ### Simple RNN
-<img alt="Random Tweets" src="https://github.com/aapoorv-tf/depdetection/blob/master/img/SimpleRNNmodel.png" width='200'>
+<img alt="Simple RNN model" src="https://github.com/aapoorv-tf/depdetection/blob/master/img/SimpleRNNmodel.png" width='200'>
 
 **Table 1:** Simple RNN summmary
 
@@ -54,11 +54,12 @@ a 1D convolutional layer, max pooling layer and LSTM).
 | Dropout | (None, 64) | 0 |
 | Dense | (None, 1) | 65 |
 
-Total params: 120,023,725 \\
-Trainable params: 23,425 \\
-Non-trainable params: 120,000,300 \\
+Total params: 120,023,725 \
+Trainable params: 23,425 \
+Non-trainable params: 120,000,300 \
 
 ### LSTM
+<img alt="LSTM model" src="https://github.com/aapoorv-tf/depdetection/blob/master/img/LSTMmodel.png" width='200'>
 
 **Table 2:** LSTM summmary
 
@@ -69,11 +70,12 @@ Non-trainable params: 120,000,300 \\
 | Dropout | (None, 16) | 0 |
 | Dense | (None, 1) | 17 |
 
-Total params: 120,020,605 \\
-Trainable params: 20,305 \\
-Non-trainable params: 120,000,300 \\
+Total params: 120,020,605 \
+Trainable params: 20,305 \
+Non-trainable params: 120,000,300 \
 
 ### CNN-LSTM
+<img alt="CNN-LSTM Model" src="https://github.com/aapoorv-tf/depdetection/blob/master/img/model.png" width='200'>
 
 **Table 3:** CNN-LSTM summmary
 
@@ -87,34 +89,70 @@ Non-trainable params: 120,000,300 \\
 | Dropout | (None, 300) | 0 |
 | Dense | (None, 1) | 301 |
 
-Total params: 120,429,033 \\
-Trainable params: 428,733 \\
-Non-trainable params: 120,000,300 \\
+Total params: 120,429,033 \
+Trainable params: 428,733 \
+Non-trainable params: 120,000,300 \
+
+The data was split into 60% train, 20% validation and 20% test data. We used
+the nadam optimizer. Adam optimizer is a stochastic gradient descent method that
+is based on adaptive estimation of first-order and second-order moments. Also, it is
+computationally eficient, has little memory requirement, invariant to diagonal rescaling
+of gradients, and is well suited for problems that are large in terms of data/parameters. Much like Adam is essentially RMSprop with momentum, Nadam is Adam with
+Nesterov momentum.
+
+## Results
+
+Once the models were compiled, there are now ready to be trained using the fit() function of the Sequential class of keras API. Since too many epochs can lead to overfitting of the training dataset, whereas too few may result in an underfit model, we give the argument of early stopping to the ”callbacks”, which provides a way to execute code and interact with the training model process automatically, Early stopping is a method that allows you to specify an arbitrary large number of training epochs and stop training once the model performance stops improving on a holdout validation dataset.
+Models were trained for 20 epochs before which the training was automatically called
+off since the validation accuracy started to drop from there on. The training and validation accuracy/loss of all the models are compared in the following figures. For the simple RNN model the validation accuracy started from 94.01% on the first epoch and reached 95.90% on the 17th epoch. Validation loss was 0.1765 on first epoch which was reduced to 0.1176 on the last epoch. For LSTM model, the validation accuracy increased from 94.25% to 96.22% in 20 epochs and validation loss reduced from 0.2106 to 0.1077. The final model, CNN-LSTM outperformed the previous models. It managed to reach 96.28% validation accuracy in the 11th epoch with validation loss of 0.1071. Moreover, the overfitting was quite low with training accuracy of 96.56%.
+
+<img alt="Simple RNN Model Acc" src="https://github.com/aapoorv-tf/depdetection/blob/master/img/RNNaccuracy.png" width='200'>
+<img alt="LSTM Model Acc" src="https://github.com/aapoorv-tf/depdetection/blob/master/img/LSTMaccuracy.png" width='200'>
+<img alt="CNN-LSTM Model acc" src="https://github.com/aapoorv-tf/depdetection/blob/master/img/accuracy.png" width='200'>
+<img alt="Simple RNN Model loss" src="https://github.com/aapoorv-tf/depdetection/blob/master/img/RNNloss.png" width='200'>
+<img alt="LSTM Model loss" src="https://github.com/aapoorv-tf/depdetection/blob/master/img/LSTMloss.png" width='200'>
+<img alt="CNN-LSTM Model loss" src="https://github.com/aapoorv-tf/depdetection/blob/master/img/loss.png" width='200'>
 
 
-### Results
+Since accuracy is not always the metric to determine how good the model is. Therefore, 3 other metrics, precision, recall and F1-score are also calculated.
 
+**Table 4:** Simple RNN Classification Report
+|      | Precision | Recall | F1-score | support |
+|:----:|:--------:| :--------:| :-----:| :-------:|
+| Class 0 | 0.97   | 0.95    | 0.96  | 29314    |
+| Class 1 | 0.95  | 0.97    | 0.96  | 29877   |
+| Accuracy |   |    | 0.96  | 59191   |
+| Macro Avg. | 0.96   | 0.96    | 0.96  | 59191   |
+| Weighted Avg. | 0.96  | 0.96    | 0.96  | 59191   |
 
-| F1 score | precision | recall | accuracy |
-|:--------:| :--------:| :-----:| :-------:|
-| 0.582    | 0.621     | 0.547  | 0.555    |
+**Table 5:** LSTM summmary Classification Report
+|      | Precision | Recall | F1-score | support |
+|:----:|:--------:| :--------:| :-----:| :-------:|
+| Class 0 | 0.98   | 0.95    | 0.96  | 29314    |
+| Class 1 | 0.95  | 0.98    | 0.97  | 29877   |
+| Accuracy |   |    | 0.96  | 59191   |
+| Macro Avg. | 0.96   | 0.96    | 0.96  | 59191   |
+| Weighted Avg. | 0.96  | 0.96    | 0.96  | 59191   |
 
+**Table 6:** CNN-LSTM summmary Classification Report
+|      | Precision | Recall | F1-score | support |
+|:----:|:--------:| :--------:| :-----:| :-------:|
+| Class 0 | 0.99   | 0.94    | 0.96  | 29314    |
+| Class 1 | 0.94  | 0.99    | 0.96  | 29877   |
+| Accuracy |   |    | 0.96  | 59191   |
+| Macro Avg. | 0.96   | 0.96    | 0.96  | 59191   |
+| Weighted Avg. | 0.96  | 0.96    | 0.96  | 59191   |
 
-<img alt="ROC curve" src="images/roc_curve.png" width='550'>
+It clearly shows that the best result is achieved by model 3 (CNN-LSTM) which
+is trained and validated on 150,000 depressive tweets and 150,000 random tweets with
+accuracy and F1-score of 96.28% and 96% respectively. It performs better than other the
+models.
 
-<sub><b>Figure 6: </b> ROC curve of the CNN model. </sub>
-
-
-**Table 2:** Test set predictions using majority vote
-
-|  Confusion Matrix | Actual: Yes | Actual: No |
-|:----------------:| :-------:| :------:|
-| **Predicted: Yes**  | 4 (TP) | 2 (FP) |
-| **Predicted: No**   | 3 (FN) | 5 (TN) |
-
-| F1 score | precision | recall | accuracy |
-|:--------:| :--------:| :-----:| :-------:|
-| 0.615    | 0.667     | 0.571  | 0.643    |
+| Models |  Val. Acc    | Precision | Recall | F1-score | Loss |
+|:---:|:----:|:--------:| :--------:| :-----:| :-------:|
+| Simple RNN | 95.98% | 0.96   | 0.96    | 0.96  | 0.1176    |
+| LSTM | 96.21% | 0.96 | 0.96  | 0.96  | 0.1077  |
+| CNN-LSTM | 96.28% |  0.96 |   0.96 | 0.96  | 0.1071   |
 
 
 
@@ -122,9 +160,3 @@ Non-trainable params: 120,000,300 \\
     1. Gratch, Artstein, Lucas, Stratou, Scherer, Nazarian, Wood, Boberg, DeVault, Marsella, Traum. The Distress Analysis Interview Corpus of human and computer interviews. InLREC 2014 May (pp. 3123-3128).
     2. Girard, Cohn. Automated Depression Analysis. Curr Opin Psychol. 2015 August; 4: 75–79.
     3. Ma, Yang, Chen, Huang, and Wang. DepAudioNet: An Efficient Deep Model for Audio based Depression Classification. ACM International Conference on Multimedia (ACM-MM) Workshop: Audio/Visual Emotion Challenge (AVEC), 2016.
-    4. Giannakopoulos, Aggelos. Introduction to audio analysis: a MATLAB approach. Oxford: Academic Press, 2014.
-    5. Piczak. Environmental Sound Classification with Convolutional Neural Networks. Institute of Electronic System, Warsaw University of Technology, 2015.
-
-## Code References
-    1. http://yerevann.github.io/2015/10/11/spoken-language-identification-with-deep-convolutional-networks
-    2. http://www.frank-zalkow.de/en/code-snippets/create-audio-spectrograms-with-python.html

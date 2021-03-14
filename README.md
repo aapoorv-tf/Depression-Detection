@@ -43,16 +43,57 @@ simple RNN model, second one is LSTM, and the last one is CNN-LSTM (composed of
 a 1D convolutional layer, max pooling layer and LSTM).
 
 ### Simple RNN
-<img alt="Random Tweets" src="https://github.com/aapoorv-tf/depdetection/blob/master/img/SimpleRNNmodel.png" width='400'>
+<img alt="Random Tweets" src="https://github.com/aapoorv-tf/depdetection/blob/master/img/SimpleRNNmodel.png" width='200'>
+
+**Table 1:** Simple RNN summmary
+
+|  Layer | Outer Shape | Parameters |
+|:----------------:| :-------:| :------:|
+| Embedding | (None, 49, 300) | 120000300 |
+| Simple RNN  | (None, 64) | 23360 |
+| Dropout | (None, 64) | 0 |
+| Dense | (None, 1) | 65 |
+
+Total params: 120,023,725 \\
+Trainable params: 23,425 \\
+Non-trainable params: 120,000,300 \\
+
+### LSTM
+
+**Table 2:** LSTM summmary
+
+|  Layer | Outer Shape | Parameters |
+|:----------------:| :-------:| :------:|
+| Embedding | (None, 49, 300) | 120000300 |
+| LSTM  | (None, 16) | 20288 |
+| Dropout | (None, 16) | 0 |
+| Dense | (None, 1) | 17 |
+
+Total params: 120,020,605 \\
+Trainable params: 20,305 \\
+Non-trainable params: 120,000,300 \\
+
+### CNN-LSTM
+
+**Table 3:** CNN-LSTM summmary
+
+|  Layer | Outer Shape | Parameters |
+|:----------------:| :-------:| :------:|
+| Embedding | (None, 49, 300) | 120000300 |
+| Conv1D | (None, 49, 32) | 28832 |
+| MaxPooling1D | (None, 24, 32) | 0 |
+| Dropout | (None, 24, 32) | 0 |
+| LSTM | (None, 300) | 399600 |
+| Dropout | (None, 300) | 0 |
+| Dense | (None, 1) | 301 |
+
+Total params: 120,429,033 \\
+Trainable params: 428,733 \\
+Non-trainable params: 120,000,300 \\
+
 
 ### Results
 
-**Table 1:** Test set predictions on 4-second spectrograms
-
-|  Confusion Matrix | Actual: Yes | Actual: No |
-|:----------------:| :-------:| :------:|
-| **Predicted: Yes**  | 174 (TP) | 106 (FP) |
-| **Predicted: No**   | 144 (FN) | 136 (TN) |
 
 | F1 score | precision | recall | accuracy |
 |:--------:| :--------:| :-----:| :-------:|
